@@ -174,71 +174,57 @@
       });
     }
 
-    // Track visit and load statistics
+    // API Configuration
     const API_URL = 'https://alakarkariyar.fwh.is/track_visit.php';
     
+    // Fetch helper
+    const apiCall = async (method = 'GET') => {
+      const response = await fetch(API_URL, {
+        method,
+        mode: 'cors',
+        headers: method === 'POST' ? { 'Content-Type': 'application/json' } : {}
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    };
+
+    // Track visit and load statistics
     async function trackVisit() {
       try {
-        // Record new visit
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // Load and display statistics
+        await apiCall('POST');
         loadVisitStats();
       } catch (error) {
-        console.error('Error tracking visit:', error);
-        // Silently fail - don't disrupt user experience
+        console.error('Visit tracking failed:', error);
       }
     }
 
+    // Load and display statistics
     async function loadVisitStats() {
       try {
-        const response = await fetch(API_URL, {
-          method: 'GET',
-          mode: 'cors'
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Update total visits
+        const data = await apiCall('GET');
+        
         document.getElementById('totalVisits').textContent = data.totalVisits || 0;
-
-        // Display last 10 visits
+        
         const lastVisitsDiv = document.getElementById('lastVisits');
-        if (data.last10 && data.last10.length > 0) {
-          lastVisitsDiv.innerHTML = data.last10.map((visit, index) => {
-            return `
-              <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <p class="text-sm font-medium text-gray-800">လည်ပတ်မှု #${data.totalVisits - index}</p>
-                    <p class="text-xs text-gray-600 mt-1">${visit.timestamp}</p>
-                  </div>
-                  <div class="text-right">
-                    <p class="text-xs text-gray-500">IP လိပ်စာ: ${visit.ip}</p>
-                  </div>
+        if (data.last10?.length > 0) {
+          lastVisitsDiv.innerHTML = data.last10.map((visit, index) => `
+            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-800">လည်ပတ်မှု #${data.totalVisits - index}</p>
+                  <p class="text-xs text-gray-600 mt-1">${visit.timestamp}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-xs text-gray-500">IP လိပ်စာ: ${visit.ip}</p>
                 </div>
               </div>
-            `;
-          }).join('');
+            </div>
+          `).join('');
         } else {
           lastVisitsDiv.innerHTML = '<p class="text-gray-500 text-sm">သိမ်းဆည်းထားသော လည်ပတ်မှု မရှိသေးပါ။</p>';
         }
       } catch (error) {
-        console.error('Error loading visit stats:', error);
+        console.error('Failed to load statistics:', error);
         document.getElementById('lastVisits').innerHTML = '<p class="text-red-500 text-sm">လည်ပတ်မှု စာရင်းဇယား ဖော်ပြရာတွင် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည်။</p>';
       }
     }
