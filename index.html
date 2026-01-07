@@ -17,7 +17,7 @@
 
     <!-- Input -->
     <label class="block text-sm font-medium text-gray-700 mb-2">
-      ဒေါင့်တွေပါတဲ့ လင့်ခ်ထည့်ပါ:
+      ဒေါင့်များ [ ] နှင့် ကွင်းစကွင်းပိတ် ( ) ပါတဲ့ လင့်ခ်ထည့်ပါ:
     </label>
     <textarea
       id="inputLink"
@@ -32,13 +32,13 @@
         onclick="cleanLink()"
         class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
       >
-        ဒေါင့်များ ရှင်းရန် နှိပ်ပါ။
+        ဒေါင့်များနှင့် ကွင်းစကွင်းပိတ်များ ရှင်းရန် နှိပ်ပါ။
       </button>
     </div>
 
     <!-- Output -->
-    <label class="block text-sm font-medium text-gray-700 mt-6 mb-2">
-      ဒေါင့်များ ရှင်းပြီး လင့်ခ်:
+      <label class="block text-sm font-medium text-gray-700 mt-6 mb-2">
+      ရှင်းလင်းပြီး လင့်ခ်:
     </label>
     <textarea
       id="outputLink"
@@ -83,7 +83,8 @@
   <script>
     function cleanLink() {
       const input = document.getElementById("inputLink").value;
-      const cleaned = input.replace(/\[|\]/g, "");
+      // Remove brackets [ ] and parentheses ( )
+      const cleaned = input.replace(/\[|\]|\(|\)/g, "");
       document.getElementById("outputLink").value = cleaned;
     }
 
@@ -102,7 +103,7 @@
     }
 
     // Track visit and load statistics
-    const API_URL = 'https://phuketithelp.center/daukphyoke/track_visit.php';
+    const API_URL = 'https://alakarkariyar.fwh.is/track_visit.php';
     
     async function trackVisit() {
       try {
