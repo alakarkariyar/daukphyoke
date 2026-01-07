@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Link Cleaner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white shadow-lg rounded-xl w-full max-w-3xl p-6">
+    <h1 class="text-2xl font-bold mb-4 text-gray-800">
+      Link Cleaner
+    </h1>
+
+    <!-- Input -->
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      Paste your link here:
+    </label>
+    <textarea
+      id="inputLink"
+      rows="5"
+      class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Paste your link..."
+    ></textarea>
+
+    <!-- Button -->
+    <div class="mt-4">
+      <button
+        onclick="cleanLink()"
+        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+      >
+        Clean Link
+      </button>
+    </div>
+
+    <!-- Output -->
+    <label class="block text-sm font-medium text-gray-700 mt-6 mb-2">
+      Cleaned link:
+    </label>
+    <textarea
+      id="outputLink"
+      rows="5"
+      class="w-full p-3 border rounded-lg bg-gray-50"
+      readonly
+    ></textarea>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function cleanLink() {
+      const input = document.getElementById("inputLink").value;
+      const cleaned = input.replace(/\[|\]/g, "");
+      document.getElementById("outputLink").value = cleaned;
+    }
+  </script>
+
+</body>
+</html>
