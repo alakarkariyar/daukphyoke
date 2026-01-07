@@ -10,8 +10,17 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-  <div class="bg-white shadow-lg rounded-xl w-full max-w-3xl p-6">
-    <h1 class="text-2xl font-bold mb-4 text-gray-800">
+  <div class="bg-white shadow-lg rounded-xl w-full max-w-3xl p-6 relative">
+    <!-- Info Icon Button -->
+    <button
+      onclick="openInfoModal()"
+      class="absolute top-6 right-6 w-8 h-8 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+      title="အကြောင်းအရာ"
+    >
+      <span class="text-lg font-bold">i</span>
+    </button>
+
+    <h1 class="text-2xl font-bold mb-4 text-gray-800 pr-10">
       လင့်ခ် သန့်ရှင်းရေး
     </h1>
 
@@ -75,6 +84,69 @@
       <h3 class="text-lg font-semibold mb-3 text-gray-700">နောက်ဆုံး ၁၀ ခု လည်ပတ်မှု:</h3>
       <div id="lastVisits" class="space-y-2">
         <p class="text-gray-500 text-sm">ဖော်ပြရန် စောင့်ဆိုင်းနေသည်...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Modal -->
+  <div id="infoModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-800">အကြောင်းအရာ</h2>
+        <button
+          onclick="closeInfoModal()"
+          class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500"
+          title="ပိတ်ရန်"
+        >
+          <span class="text-xl font-bold">×</span>
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">အကြောင်းအရာ</h3>
+            <p class="text-gray-700">
+              လင့်ခ် သန့်ရှင်းရေး သည် လင့်ခ်များမှ ဒေါင့်များ `[ ]` နှင့် ကွင်းစကွင်းပိတ်များ `( )` ကို အလွယ်တကူ ဖယ်ရှားပေးသော ဝဘ်ဆိုဒ်တစ်ခု ဖြစ်သည်။
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">အသုံးပြုနည်း</h3>
+            <ol class="list-decimal list-inside text-gray-700 space-y-2">
+              <li>ဒေါင့်များ `[ ]` နှင့် ကွင်းစကွင်းပိတ်များ `( )` ပါသော လင့်ခ်ကို ထည့်သွင်းပါ</li>
+              <li>"ဒေါင့်များနှင့် ကွင်းစကွင်းပိတ်များ ရှင်းရန် နှိပ်ပါ" ခလုတ်ကို နှိပ်ပါ</li>
+              <li>ရှင်းလင်းပြီး လင့်ခ်ကို "ရှင်းပြီးလင့်ခ် ကူးရန် နှိပ်ပါ" ခလုတ်ဖြင့် ကူးယူပါ</li>
+            </ol>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">အထူးလုပ်ဆောင်ချက်များ</h3>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li>🔗 လင့်ခ်များမှ `[ ]` ဒေါင့်များနှင့် `( )` ကွင်းစကွင်းပိတ်များကို အလိုအလျောက် ဖယ်ရှားပေးခြင်း</li>
+              <li>📋 ရှင်းလင်းပြီး လင့်ခ်ကို တစ်ချက်နှိပ်ရုံဖြင့် ကူးယူနိုင်ခြင်း</li>
+              <li>📊 ဝဘ်ဆိုဒ် လည်ပတ်မှု စာရင်းဇယြသခြင်း</li>
+              <li>🌐 စုစုပေါင်း လည်ပတ်မှု အရေအတွြသခြင်း</li>
+              <li>👥 IP လိပ်စာအလိုက် နောက်ဆုံး ၁၀ ခု လည်ပတ်မှြသခြင်း</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">နည်းပညာများ</h3>
+            <p class="text-gray-700">
+              <strong>Frontend:</strong> HTML, JavaScript, Tailwind CSS<br>
+              <strong>Backend:</strong> PHP<br>
+              <strong>Hosting:</strong> GitHub Pages (Frontend), Custom PHP Server (Backend)<br>
+              <strong>Data Storage:</strong> JSON
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-gray-200">
+            <p class="text-sm text-gray-600">
+              <strong>Live Demo:</strong> <a href="https://alakarkariyar.github.io/daukphyoke/" target="_blank" class="text-blue-600 hover:underline">GitHub Pages</a><br>
+              <strong>API Endpoint:</strong> <code class="text-xs bg-gray-100 px-2 py-1 rounded">https://alakarkariyar.fwh.is/track_visit.php</code>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -156,6 +228,32 @@
         document.getElementById('lastVisits').innerHTML = '<p class="text-red-500 text-sm">လည်ပတ်မှု စာရင်းဇယား ဖော်ပြရာတွင် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည်။</p>';
       }
     }
+
+    // Info Modal Functions
+    function openInfoModal() {
+      document.getElementById('infoModal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeInfoModal() {
+      document.getElementById('infoModal').classList.add('hidden');
+      document.body.style.overflow = 'auto'; // Restore scrolling
+    }
+
+    // Close modal when clicking outside
+    document.addEventListener('click', (e) => {
+      const modal = document.getElementById('infoModal');
+      if (e.target === modal) {
+        closeInfoModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeInfoModal();
+      }
+    });
 
     // Track visit when page loads
     document.addEventListener('DOMContentLoaded', () => {
