@@ -59,6 +59,24 @@
         လင့်ခ်ကူးပြီးပြီ!
       </span>
     </div>
+
+    <!-- Visit Statistics -->
+    <div class="mt-8 pt-6 border-t border-gray-200">
+      <h2 class="text-xl font-bold mb-4 text-gray-800">
+        Site Visit Statistics
+      </h2>
+      <div class="mb-4">
+        <p class="text-lg text-gray-700">
+          <span class="font-semibold">Total Visits:</span>
+          <span id="totalVisits" class="text-blue-600 font-bold">0</span>
+        </p>
+      </div>
+      
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">Last 10 Visits:</h3>
+      <div id="lastVisits" class="space-y-2">
+        <p class="text-gray-500 text-sm">Loading...</p>
+      </div>
+    </div>
   </div>
 
   <!-- JavaScript -->
@@ -82,6 +100,66 @@
         }, 1500);
       });
     }
+
+    // Track visit and load statistics
+    const API_URL = 'https://phuketithelp.center/daukphyoke/track_visit.php';
+    
+    async function trackVisit() {
+      try {
+        // Record new visit
+        await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        // Load and display statistics
+        loadVisitStats();
+      } catch (error) {
+        console.error('Error tracking visit:', error);
+      }
+    }
+
+    async function loadVisitStats() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        // Update total visits
+        document.getElementById('totalVisits').textContent = data.totalVisits || 0;
+
+        // Display last 10 visits
+        const lastVisitsDiv = document.getElementById('lastVisits');
+        if (data.last10 && data.last10.length > 0) {
+          lastVisitsDiv.innerHTML = data.last10.map((visit, index) => {
+            return `
+              <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="text-sm font-medium text-gray-800">Visit #${data.totalVisits - index}</p>
+                    <p class="text-xs text-gray-600 mt-1">${visit.timestamp}</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-xs text-gray-500">IP: ${visit.ip}</p>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        } else {
+          lastVisitsDiv.innerHTML = '<p class="text-gray-500 text-sm">No visits recorded yet.</p>';
+        }
+      } catch (error) {
+        console.error('Error loading visit stats:', error);
+        document.getElementById('lastVisits').innerHTML = '<p class="text-red-500 text-sm">Error loading visit statistics.</p>';
+      }
+    }
+
+    // Track visit when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      trackVisit();
+    });
   </script>
 
 </body>
