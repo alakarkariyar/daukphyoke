@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
   <meta charset="UTF-8" />
   <title>လင့်ခ် သန့်ရှင်းရေး</title>
@@ -23,7 +23,7 @@
       id="inputLink"
       rows="5"
       class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="Paste your link..."
+      placeholder="လင့်ခ်ကို ဒီနေရာတွင် ထည့်ပါ..."
     ></textarea>
 
     <!-- Clean Button -->
@@ -63,18 +63,18 @@
     <!-- Visit Statistics -->
     <div class="mt-8 pt-6 border-t border-gray-200">
       <h2 class="text-xl font-bold mb-4 text-gray-800">
-        Site Visit Statistics
+        ဝဘ်ဆိုဒ် လည်ပတ်မှု စာရင်းဇယား
       </h2>
       <div class="mb-4">
         <p class="text-lg text-gray-700">
-          <span class="font-semibold">Total Visits:</span>
+          <span class="font-semibold">စုစုပေါင်း လည်ပတ်မှု:</span>
           <span id="totalVisits" class="text-blue-600 font-bold">0</span>
         </p>
       </div>
       
-      <h3 class="text-lg font-semibold mb-3 text-gray-700">Last 10 Visits:</h3>
+      <h3 class="text-lg font-semibold mb-3 text-gray-700">နောက်ဆုံး ၁၀ ခု လည်ပတ်မှု:</h3>
       <div id="lastVisits" class="space-y-2">
-        <p class="text-gray-500 text-sm">Loading...</p>
+        <p class="text-gray-500 text-sm">ဖော်ပြရန် စောင့်ဆိုင်းနေသည်...</p>
       </div>
     </div>
   </div>
@@ -137,22 +137,22 @@
               <div class="bg-gray-50 p-3 rounded-lg border border-gray-200">
                 <div class="flex justify-between items-start">
                   <div>
-                    <p class="text-sm font-medium text-gray-800">Visit #${data.totalVisits - index}</p>
+                    <p class="text-sm font-medium text-gray-800">လည်ပတ်မှု #${data.totalVisits - index}</p>
                     <p class="text-xs text-gray-600 mt-1">${visit.timestamp}</p>
                   </div>
                   <div class="text-right">
-                    <p class="text-xs text-gray-500">IP: ${visit.ip}</p>
+                    <p class="text-xs text-gray-500">IP လိပ်စာ: ${visit.ip}</p>
                   </div>
                 </div>
               </div>
             `;
           }).join('');
         } else {
-          lastVisitsDiv.innerHTML = '<p class="text-gray-500 text-sm">No visits recorded yet.</p>';
+          lastVisitsDiv.innerHTML = '<p class="text-gray-500 text-sm">သိမ်းဆည်းထားသော လည်ပတ်မှု မရှိသေးပါ။</p>';
         }
       } catch (error) {
         console.error('Error loading visit stats:', error);
-        document.getElementById('lastVisits').innerHTML = '<p class="text-red-500 text-sm">Error loading visit statistics.</p>';
+        document.getElementById('lastVisits').innerHTML = '<p class="text-red-500 text-sm">လည်ပတ်မှု စာရင်းဇယား ဖော်ပြရာတွင် အမှားတစ်ခု ဖြစ်ပွားခဲ့သည်။</p>';
       }
     }
 
